@@ -13,9 +13,11 @@
 @interface DBEnvironmentConfiguration (){
     bool _shouldAutodetect;
     NSString *_currentEnvironment;
+    NSString *_parentEnvironment;
     NSString *_resource;
     NSString *_resourceExtension;
     NSDictionary *_configuration;
+    NSDictionary *_parentConfig;
     NSDictionary *_environmentMapping;
     DBBuildType _detectedBuildType;
 }
@@ -191,8 +193,29 @@ NSDictionary* getConfigurationFromFile(NSString *resource, NSString *type, NSStr
     sharedInstance->_shouldAutodetect = false;
 }
 
+
++ (void)setEnvironment:(NSString *)environment parentEnvironment:(NSString *)parentEnvironment {
+    if (![environment isEqualToString:sharedInstance->_currentEnvironment]) {
+        sharedInstance->_currentEnvironment = environment;
+        sharedInstance->_parentEnvironment = parentEnvironment;
+        sharedInstance->_configuration = getConfigurationFromFile(sharedInstance->_resource, sharedInstance->_resourceExtension, sharedInstance->_currentEnvironment);
+        sharedInstance->_parentConfig = getConfigurationFromFile(sharedInstance->_resource, sharedInstance->_resourceExtension, sharedInstance->_parentEnvironment);
+    }
+    sharedInstance->_shouldAutodetect = false;
+}
+
 #pragma mark - Values
 + (NSString *)valueForKey:(NSString *)key{
-    return [sharedInstance->_configuration objectForKey:key];
+    id object = (sharedInstance->_configuration)[key];
+    if (object) {
+        return object;
+    }
+    id parentObject = (sharedInstance->_parentConfig)[key];
+    
+    if (parentObject) {
+        return parentObject;
+    }
+    
+    return nil;
 }
 @end

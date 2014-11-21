@@ -37,6 +37,14 @@ typedef enum DBBuildType{
 + (void)setEnvironment:(NSString *)environment;
 
 /**
+ * Sets environment to read values with parentEenvironment.
+ *
+ * @param environment The name of the environment as it appears in the file
+ * @param environment The name of the parent environment as it appears in the file
+ *
+ */
++ (void)setEnvironment:(NSString *)environment parentEnvironment:(NSString *)parentEnvironment;
+/**
  * Sets file to read values from.
  * Defaults to environments.json
  *

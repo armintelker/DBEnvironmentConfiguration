@@ -5,10 +5,10 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 Super-simple environment configuration for iOS apps. Switch between environments by changing one word.
                        DESC
-  s.homepage         = "https://github.com/DavidBenko/DBEnvironmentConfiguration"
+  s.homepage         = "https://github.com/armintelker/DBEnvironmentConfiguration"
   s.license          = 'MIT'
   s.author           = { "David Benko" => "dbenko@prndl.us" }
-  s.source           = { :git => "https://github.com/DavidBenko/DBEnvironmentConfiguration.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/armintelker/DBEnvironmentConfiguration.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/davidwbenko'
 
   s.platform     = :ios
